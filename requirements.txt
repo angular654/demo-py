@@ -1,0 +1,4 @@
+streamlit
+imageai
+tensorflow
+pillow
