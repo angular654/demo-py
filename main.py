@@ -30,17 +30,19 @@ def recognition(image):
 def main():
     st.sidebar.header("Snake vision")
     st.sidebar.image("sidebar-logo.jpg")
-    st.title("Распознование объектов")
+    st.title("Распознавание объектов")
     uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpg", "jpeg"])
     if uploaded_file is not None:
         image = Image.open(uploaded_file)
         imageLocation = st.empty()
         imageLocation.image(image, caption=uploaded_file.name, use_column_width=True)
         st.write("")
-        btn = st.button('Начать распознование')
+        btn = st.empty()
+        btn.button('Начать распознование')
         if(btn):
             if(recognition(uploaded_file.name)):
                 imageLocation.image("out.jpg")
+                btn.success("Готово!")
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     main()
