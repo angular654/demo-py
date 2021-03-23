@@ -7,6 +7,12 @@ from PIL import Image
 import os
 from imageai.Detection import ObjectDetection
 
+
+def save_uploadedfile(uploadedfile):
+    with open(os.path.join("Data", uploadedfile.name), "wb") as f:
+        f.write(uploadedfile.getbuffer())
+
+
 def recognition(image):
         exec_path = os.getcwd()
         detector = ObjectDetection()
@@ -16,7 +22,7 @@ def recognition(image):
         )
         detector.loadModel()
         detections = detector.detectObjectsFromImage(
-            input_image=os.path.join(exec_path, image),
+            input_image=os.path.join("Data", image),
             output_image_path=os.path.join(exec_path, "out.jpg"),
             minimum_percentage_probability=70,
             display_percentage_probability=True,
@@ -24,8 +30,9 @@ def recognition(image):
         )
         for DetectedObject in detections:
             if DetectedObject["name"] == "person":
-                print(DetectedObject["name"], " : ", DetectedObject["percentage_probability"], " DETECTED PERSON!")
+                st.write(DetectedObject["name"], " : ", DetectedObject["percentage_probability"], " DETECTED PERSON!")
         return True
+
 
 def main():
     st.sidebar.header("Snake vision")
@@ -37,6 +44,7 @@ def main():
         imageLocation = st.empty()
         imageLocation.image(image, caption=uploaded_file.name, use_column_width=True)
         st.write("")
+        save_uploadedfile(uploaded_file)
         btn = st.empty()
         btn.button('Начать распознование')
         if(btn):
@@ -44,6 +52,8 @@ def main():
                 imageLocation.image("out.jpg")
                 btn.success("Готово!")
 # Press the green button in the gutter to run the script.
+
+
 if __name__ == '__main__':
     main()
 
