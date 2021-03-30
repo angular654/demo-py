@@ -29,8 +29,7 @@ def recognition(image):
             display_object_name=True
         )
         for DetectedObject in detections:
-            if DetectedObject["name"] == "person":
-                st.write(DetectedObject["name"], " : ", DetectedObject["percentage_probability"], " DETECTED PERSON!")
+                st.write(DetectedObject["name"], " : ", DetectedObject["percentage_probability"])
         return True
 
 
@@ -50,11 +49,12 @@ def main():
         if(btn):
             if(recognition(uploaded_file.name)):
                 imageLocation.image("out.jpg")
+                os.remove(f'./Data/{uploaded_file.name}')
                 btn.success("Готово!")
+                
 # Press the green button in the gutter to run the script.
 
 
 if __name__ == '__main__':
     main()
-
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
